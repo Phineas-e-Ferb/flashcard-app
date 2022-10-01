@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flashcard/widgets/default_button.widget.dart';
+import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -10,14 +10,21 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  bool showPassword = false;
+
+  void changePasswordVisibility() {
+    setState(() {
+      showPassword = !showPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
             children: [
               Align(
                 alignment: Alignment.center,
@@ -50,44 +57,48 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(
                 height: 24,
               ),
-              const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Nome de usuário",
-                  prefixIcon: Icon(Icons.person),
-                ),
+              const DefaultInput(
+                placeholder: "Nome de usuário",
+                prefixIcon: Icons.person,
               ),
               const SizedBox(
                 height: 12,
               ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Senha",
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      onPressed: () => {},
-                      icon: Icon(Icons.visibility),
-                    )),
+              DefaultInput(
+                placeholder: "Senha",
+                prefixIcon: Icons.lock,
+                suffixIcon:
+                    !showPassword ? Icons.visibility : Icons.visibility_off,
+                obscureText: !showPassword,
+                onSuffixIconPressed: () => changePasswordVisibility(),
               ),
               const SizedBox(
                 height: 12,
               ),
-              ElevatedButton(
+              DefaultButtonWidget(
+                label: "Entrar",
                 onPressed: () => {},
-                child: Text("Entrar"),
-              ),
-              const Expanded(
-                child: SizedBox(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Não possui conta?"),
+                  const Text(
+                    "Não possui conta?",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   TextButton(
                     onPressed: () => {},
-                    child: const Text("Registre-se"),
+                    child: const Text(
+                      "Registre-se",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ),
                 ],
               )
