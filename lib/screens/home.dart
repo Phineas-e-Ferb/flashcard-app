@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SizedBox(
         width: 300,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
@@ -25,23 +25,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.of(context).size.width * 0.6,
               ),
             ),
-            const Text(
-              'Estude\nOrganize-se\nAprimore-se',
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Container(
-              width: 272,
-              child: const Text(
-                'Estude com flash cards personalizáveis ao ponto de se transformar em um mago',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w200,
-                  height: 1.5,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Estude\nOrganize-se\nAprimore-se',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                Container(
+                  width: 272,
+                  child: const Text(
+                    'Estude com flash cards personalizáveis ao ponto de se transformar em um mago',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w200,
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Container(
               height: 64,
