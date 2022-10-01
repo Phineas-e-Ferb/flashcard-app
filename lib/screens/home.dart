@@ -83,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        Navigator.pushNamed(context, "/signin"),
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => Theme.of(context).colorScheme.surface,

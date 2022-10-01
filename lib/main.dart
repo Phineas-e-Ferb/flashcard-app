@@ -1,4 +1,5 @@
 import 'package:flashcard/screens/home.dart';
+import 'package:flashcard/screens/signin.dart';
 import 'package:flashcard/utils/custom_theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: getCustomThemeData(),
-      home: const HomeScreen(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const HomeScreen(),
+        "/signin": (context) => const SignInScreen(),
+      },
     );
   }
 }
