@@ -32,6 +32,9 @@ class DefaultInput extends StatelessWidget {
         fillColor: Theme.of(context).colorScheme.surface,
         filled: true,
         hintText: placeholder,
+        hintStyle: const TextStyle(
+          color: Color(0xFF585858),
+        ),
         prefixIcon: Icon(prefixIcon),
         suffixIcon: suffixIcon != null
             ? IconButton(
