@@ -1,5 +1,6 @@
 import 'package:flashcard/screens/home.dart';
 import 'package:flashcard/screens/signin.dart';
+import 'package:flashcard/screens/signup.dart';
 import 'package:flashcard/utils/custom_theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => const HomeScreen(),
         "/signin": (context) => const SignInScreen(),
+        "/signup": (context) => const SignUpScreen(),
       },
     );
   }
