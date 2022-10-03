@@ -96,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     suffixIcon:
                         !showPassword ? Icons.visibility : Icons.visibility_off,
                     obscureText: !showPassword,
-                    onSuffixIconPressed: () => changePasswordVisibility(),
+                    onSuffixIconPressed: changePasswordVisibility,
                   ),
                   DefaultInput(
                     placeholder: "Confirme a senha",
@@ -104,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     suffixIcon:
                         !showPassword ? Icons.visibility : Icons.visibility_off,
                     obscureText: !showPassword,
-                    onSuffixIconPressed: () => changePasswordVisibility(),
+                    onSuffixIconPressed: changePasswordVisibility,
                   ),
                   DefaultButtonWidget(
                     label: "Cadastrar",

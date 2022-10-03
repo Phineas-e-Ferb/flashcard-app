@@ -70,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 suffixIcon:
                     !showPassword ? Icons.visibility : Icons.visibility_off,
                 obscureText: !showPassword,
-                onSuffixIconPressed: () => changePasswordVisibility(),
+                onSuffixIconPressed: changePasswordVisibility,
               ),
               const SizedBox(
                 height: 12,
