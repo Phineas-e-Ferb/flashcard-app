@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
+import 'package:flashcard/widgets/image_picker_preview.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -64,25 +65,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       }
                     },
-                    child: _image != null
-                        ? CircleAvatar(
-                            backgroundImage: FileImage(
-                              _image!,
-                            ),
-                            radius: 50,
-                          )
-                        : Container(
-                            width: 104,
-                            height: 104,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(106))),
-                            child: const Icon(
-                              Icons.image,
-                              size: 36,
-                            ),
-                          ),
+                    child: ImagePickerPreviewWidget(
+                      image: _image,
+                    ),
                   ),
                 ),
                 const SizedBox(
