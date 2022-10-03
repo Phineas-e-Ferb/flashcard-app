@@ -23,6 +23,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  void handleAddImage() async {
+    ImageSource source = ImageSource.gallery;
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 50,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,18 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Center(
                     child: GestureDetector(
-                      onTap: () async {
-                        var source = ImageSource.gallery;
-                        XFile? pickedFile = await ImagePicker().pickImage(
-                          source: source,
-                          imageQuality: 50,
-                        );
-                        if (pickedFile != null) {
-                          setState(() {
-                            _image = File(pickedFile.path);
-                          });
-                        }
-                      },
+                      onTap: handleAddImage,
                       child: ImagePickerPreviewWidget(
                         image: _image,
                       ),
