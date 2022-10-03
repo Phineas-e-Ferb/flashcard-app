@@ -53,20 +53,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Column(
                     children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                          'images/signup_image.png',
-                          width: MediaQuery.of(context).size.width * 0.45,
-                        ),
+                      Image.asset(
+                        'images/signup_image.png',
+                        width: MediaQuery.of(context).size.width * 0.45,
                       ),
                       Text(
                         "Torne-se um mago!",
-                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onBackground),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                       ),
                     ],
                   ),
