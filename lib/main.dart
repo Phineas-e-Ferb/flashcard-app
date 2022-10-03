@@ -1,7 +1,5 @@
-import 'package:flashcard/screens/home.dart';
-import 'package:flashcard/screens/signin.dart';
-import 'package:flashcard/screens/signup.dart';
 import 'package:flashcard/utils/custom_theme_data.dart';
+import 'package:flashcard/utils/get_routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,14 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flashcard App',
       theme: getCustomThemeData(),
+      debugShowCheckedModeBanner: false,
       initialRoute: "/",
-      routes: {
-        "/": (context) => const HomeScreen(),
-        "/signin": (context) => const SignInScreen(),
-        "/signup": (context) => const SignUpScreen(),
-      },
+      routes: getRoutes(),
     );
   }
 }
