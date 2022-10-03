@@ -30,117 +30,109 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'images/signup_image.png',
-                    width: MediaQuery.of(context).size.width * 0.45,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.95,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          'images/signup_image.png',
+                          width: MediaQuery.of(context).size.width * 0.45,
+                        ),
+                      ),
+                      Text(
+                        "Torne-se um mago!",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onBackground),
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  "Torne-se um mago!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onBackground),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () async {
-                      var source = ImageSource.gallery;
-                      XFile? pickedFile = await ImagePicker().pickImage(
-                        source: source,
-                        imageQuality: 50,
-                      );
-                      if (pickedFile != null) {
-                        setState(() {
-                          _image = File(pickedFile.path);
-                        });
-                      }
-                    },
-                    child: ImagePickerPreviewWidget(
-                      image: _image,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                const Text(
-                  "Adicione uma foto",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                const DefaultInput(
-                  placeholder: "Nome de usuário",
-                  prefixIcon: Icons.person,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                DefaultInput(
-                  placeholder: "Senha",
-                  prefixIcon: Icons.lock,
-                  suffixIcon:
-                      !showPassword ? Icons.visibility : Icons.visibility_off,
-                  obscureText: !showPassword,
-                  onSuffixIconPressed: () => changePasswordVisibility(),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                DefaultInput(
-                  placeholder: "Confirme a senha",
-                  prefixIcon: Icons.lock,
-                  suffixIcon:
-                      !showPassword ? Icons.visibility : Icons.visibility_off,
-                  obscureText: !showPassword,
-                  onSuffixIconPressed: () => changePasswordVisibility(),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                DefaultButtonWidget(
-                  label: "Cadastrar",
-                  onPressed: () => {},
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Já possui uma conta?",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        var source = ImageSource.gallery;
+                        XFile? pickedFile = await ImagePicker().pickImage(
+                          source: source,
+                          imageQuality: 50,
+                        );
+                        if (pickedFile != null) {
+                          setState(() {
+                            _image = File(pickedFile.path);
+                          });
+                        }
+                      },
+                      child: ImagePickerPreviewWidget(
+                        image: _image,
                       ),
                     ),
-                    TextButton(
-                      onPressed: () => {},
-                      child: const Text(
-                        "Entre aqui",
+                  ),
+                  const Text(
+                    "Adicione uma foto",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const DefaultInput(
+                    placeholder: "Nome de usuário",
+                    prefixIcon: Icons.person,
+                  ),
+                  DefaultInput(
+                    placeholder: "Senha",
+                    prefixIcon: Icons.lock,
+                    suffixIcon:
+                        !showPassword ? Icons.visibility : Icons.visibility_off,
+                    obscureText: !showPassword,
+                    onSuffixIconPressed: () => changePasswordVisibility(),
+                  ),
+                  DefaultInput(
+                    placeholder: "Confirme a senha",
+                    prefixIcon: Icons.lock,
+                    suffixIcon:
+                        !showPassword ? Icons.visibility : Icons.visibility_off,
+                    obscureText: !showPassword,
+                    onSuffixIconPressed: () => changePasswordVisibility(),
+                  ),
+                  DefaultButtonWidget(
+                    label: "Cadastrar",
+                    onPressed: () => {},
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Já possui uma conta?",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      TextButton(
+                        onPressed: () => {},
+                        child: const Text(
+                          "Entre aqui",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
