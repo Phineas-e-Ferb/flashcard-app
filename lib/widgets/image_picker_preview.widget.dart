@@ -14,15 +14,9 @@ class ImagePickerPreviewWidget extends StatelessWidget {
             ),
             radius: 50,
           )
-        : Container(
-            width: 104,
-            height: 104,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(106),
-              ),
-            ),
+        : CircleAvatar(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            radius: 50,
             child: const Icon(
               Icons.image,
               size: 36,
