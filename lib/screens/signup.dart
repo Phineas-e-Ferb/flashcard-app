@@ -36,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.center,
                   child: Image.asset(
                     'images/signup_image.png',
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.45,
                   ),
                 ),
                 Text(
@@ -65,14 +65,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                     },
                     child: _image != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(106),
-                            child: Image.file(
+                        ? CircleAvatar(
+                            backgroundImage: FileImage(
                               _image!,
-                              width: 104,
-                              height: 104,
-                              fit: BoxFit.fitWidth,
                             ),
+                            radius: 50,
                           )
                         : Container(
                             width: 104,
