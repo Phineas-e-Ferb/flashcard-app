@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flashcard/services/flashcard_service.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flashcard/widgets/image_picker_preview.widget.dart';
@@ -16,6 +17,10 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool showPassword = false;
   File? _image;
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   void changePasswordVisibility() {
     setState(() {
@@ -34,6 +39,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _image = File(pickedFile.path);
       });
     }
+  }
+
+  void handleUserRegister() async {
+    FlashCardService().postRequest("users", body: {
+      "username": usernameController.text,
+      "password": passwordController.text,
+    });
   }
 
   @override
@@ -83,9 +95,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const DefaultInput(
+                  DefaultInput(
                     placeholder: "Nome de usuário",
                     prefixIcon: Icons.person,
+                    controller: usernameController,
                   ),
                   DefaultInput(
                     placeholder: "Senha",
@@ -94,6 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         !showPassword ? Icons.visibility : Icons.visibility_off,
                     obscureText: !showPassword,
                     onSuffixIconPressed: changePasswordVisibility,
+                    controller: passwordController,
                   ),
                   DefaultInput(
                     placeholder: "Confirme a senha",
@@ -102,10 +116,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         !showPassword ? Icons.visibility : Icons.visibility_off,
                     obscureText: !showPassword,
                     onSuffixIconPressed: changePasswordVisibility,
+                    controller: confirmPasswordController,
                   ),
                   DefaultButtonWidget(
                     label: "Cadastrar",
-                    onPressed: () => {},
+                    onPressed: handleUserRegister,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

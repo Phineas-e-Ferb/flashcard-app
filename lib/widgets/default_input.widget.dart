@@ -8,16 +8,19 @@ class DefaultInput extends StatelessWidget {
     this.suffixIcon,
     this.onSuffixIconPressed,
     this.obscureText = false,
+    this.controller,
   });
   final String placeholder;
   final IconData prefixIcon;
   final IconData? suffixIcon;
   final Function? onSuffixIconPressed;
   final bool obscureText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.surface),
