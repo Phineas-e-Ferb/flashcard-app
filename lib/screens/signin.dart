@@ -1,5 +1,6 @@
 import 'package:flashcard/screens/home.dart';
 import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flutter/material.dart';
@@ -35,16 +36,20 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       isLoading = false;
     });
-    navigateToHomepage(response);
+    handleSigninResponse(response);
   }
 
   bool shouldDisableButton() {
     return usernameController.text == "" || passwordController.text == "";
   }
 
-  void navigateToHomepage(dynamic response) {
-    Navigator.pushNamed(context, '/home',
-        arguments: HomeScreenArguments(response["user"]["image"]));
+  void handleSigninResponse(dynamic response) {
+    if (response["error"] != null) {
+      showDefaultAlertDialog("Erro", response["message"], context);
+    } else {
+      Navigator.pushNamed(context, '/home',
+          arguments: HomeScreenArguments(response["user"]["image"]));
+    }
   }
 
   @override
