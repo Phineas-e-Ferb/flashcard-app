@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
 class DefaultButtonWidget extends StatelessWidget {
-  const DefaultButtonWidget(
-      {super.key,
-      required this.label,
-      required this.onPressed,
-      this.showLoading = false});
+  const DefaultButtonWidget({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.showLoading = false,
+    this.disableButton = true,
+  });
   final String label;
   final Function onPressed;
   final bool showLoading;
+  final bool disableButton;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => onPressed(),
+      onPressed: disableButton ? null : () => onPressed(),
       style: ButtonStyle(
         fixedSize:
             MaterialStateProperty.resolveWith((states) => const Size(100, 48)),
@@ -24,8 +27,12 @@ class DefaultButtonWidget extends StatelessWidget {
         ),
       ),
       child: showLoading
-          ? CircularProgressIndicator(
-              color: Colors.white,
+          ? const SizedBox(
+              width: 25,
+              height: 25,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             )
           : Text(
               label,

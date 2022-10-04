@@ -1,5 +1,6 @@
 import 'package:flashcard/screens/home.dart';
 import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,20 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       isLoading = false;
     });
-    print(response["user"]["image"]);
-    Navigator.pushNamed(context, '/home',
-        arguments: HomeScreenArguments(response["user"]["image"]));
+    handleSigninResponse(response);
+  }
+
+  bool shouldDisableButton() {
+    return usernameController.text == "" || passwordController.text == "";
+  }
+
+  void handleSigninResponse(dynamic response) {
+    if (response["error"] != null) {
+      showDefaultAlertDialog("Erro", response["message"], context);
+    } else {
+      Navigator.pushNamed(context, '/home',
+          arguments: HomeScreenArguments(response["user"]["image"]));
+    }
   }
 
   @override
@@ -103,6 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 label: "Entrar",
                 onPressed: handleUserLogin,
                 showLoading: isLoading,
+                disableButton: shouldDisableButton(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +128,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          {Navigator.pushNamed(context, "/signup")},
                       child: const Text(
                         "Registre-se",
                         style: TextStyle(

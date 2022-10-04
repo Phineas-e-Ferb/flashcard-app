@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flashcard/screens/home.dart';
 import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/utils/image_to_base64.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
@@ -44,11 +46,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void handleUserRegister() async {
     String image64 = await imageToBase64(_image!);
-    FlashCardService().postRequest("users", body: {
+    var response = await FlashCardService().postRequest("users", body: {
       "username": usernameController.text,
       "password": passwordController.text,
       "image": image64
     });
+    handleRegisterResponse(response);
+  }
+
+  void handleRegisterResponse(dynamic response) {
+    if (response["error"] != null) {
+      showDefaultAlertDialog("Erro", response["message"], context);
+    } else {
+      Navigator.pushReplacementNamed(context, "/home",
+          arguments: HomeScreenArguments(response["user"]["image"]));
+    }
+  }
+
+  bool shouldDisableButton() {
+    return usernameController.text == "" ||
+        passwordController.text == "" ||
+        confirmPasswordController.text == "" ||
+        passwordController.text != confirmPasswordController.text ||
+        _image == null;
   }
 
   @override
@@ -124,6 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   DefaultButtonWidget(
                     label: "Cadastrar",
                     onPressed: handleUserRegister,
+                    disableButton: shouldDisableButton(),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +157,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => {},
+                        onPressed: () =>
+                            {Navigator.pushNamed(context, "/signin")},
                         child: const Text(
                           "Entre aqui",
                           style: TextStyle(
