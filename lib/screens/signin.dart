@@ -35,7 +35,14 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       isLoading = false;
     });
-    print(response["user"]["image"]);
+    navigateToHomepage(response);
+  }
+
+  bool shouldDisableButton() {
+    return usernameController.text == "" || passwordController.text == "";
+  }
+
+  void navigateToHomepage(dynamic response) {
     Navigator.pushNamed(context, '/home',
         arguments: HomeScreenArguments(response["user"]["image"]));
   }
@@ -103,6 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 label: "Entrar",
                 onPressed: handleUserLogin,
                 showLoading: isLoading,
+                disableButton: shouldDisableButton(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +123,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          {Navigator.pushNamed(context, "/signup")},
                       child: const Text(
                         "Registre-se",
                         style: TextStyle(

@@ -51,6 +51,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  bool shouldDisableButton() {
+    return usernameController.text == "" ||
+        passwordController.text == "" ||
+        confirmPasswordController.text == "" ||
+        passwordController.text != confirmPasswordController.text ||
+        _image == null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,6 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   DefaultButtonWidget(
                     label: "Cadastrar",
                     onPressed: handleUserRegister,
+                    disableButton: shouldDisableButton(),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +145,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => {},
+                        onPressed: () =>
+                            {Navigator.pushNamed(context, "/signin")},
                         child: const Text(
                           "Entre aqui",
                           style: TextStyle(
