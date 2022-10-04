@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class FlashCardService {
   late Dio dio;
-  final String domain = "http://192.168.1.14:3000/";
+  final String domain = "http://192.168.1.21:3000/";
 
   FlashCardService() {
     dio = Dio();
@@ -23,13 +23,10 @@ class FlashCardService {
     //Todo try catch
   }
 
-  void postRequest(String endpoint, {String? args, dynamic body}) async {
-    dio
-        .post(createUrl(endpoint, args), data: body)
-        .then(
-          (value) => print(value),
-        )
-        .catchError((onError) => print(onError));
+  Future<dynamic> postRequest(String endpoint,
+      {String? args, dynamic body}) async {
+    var response = await dio.post(createUrl(endpoint, args), data: body);
+    return response.data;
     //Todo try catch
   }
 
