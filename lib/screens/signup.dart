@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/utils/image_to_base64.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flashcard/widgets/image_picker_preview.widget.dart';
@@ -42,9 +43,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleUserRegister() async {
+    String image64 = await imageToBase64(_image!);
     FlashCardService().postRequest("users", body: {
       "username": usernameController.text,
       "password": passwordController.text,
+      "image": image64
     });
   }
 
