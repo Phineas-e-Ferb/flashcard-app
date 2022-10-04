@@ -27,8 +27,12 @@ class DefaultButtonWidget extends StatelessWidget {
         ),
       ),
       child: showLoading
-          ? const CircularProgressIndicator(
-              color: Colors.white,
+          ? const SizedBox(
+              width: 25,
+              height: 25,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             )
           : Text(
               label,
