@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class DefaultButtonWidget extends StatelessWidget {
   const DefaultButtonWidget(
-      {super.key, required this.label, required this.onPressed});
+      {super.key,
+      required this.label,
+      required this.onPressed,
+      this.showLoading = false});
   final String label;
   final Function onPressed;
+  final bool showLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +23,17 @@ class DefaultButtonWidget extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: showLoading
+          ? CircularProgressIndicator(
+              color: Colors.white,
+            )
+          : Text(
+              label,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
     );
   }
 }
