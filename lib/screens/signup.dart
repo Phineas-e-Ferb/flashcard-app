@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:flashcard/screens/home.dart';
 import 'package:flashcard/services/flashcard_service.dart';
 import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/utils/image_to_base64.dart';
+import 'package:flashcard/utils/save_user_id.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flashcard/widgets/image_picker_preview.widget.dart';
@@ -54,12 +54,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     handleRegisterResponse(response);
   }
 
-  void handleRegisterResponse(dynamic response) {
+  void handleRegisterResponse(dynamic response) async {
     if (response["error"] != null) {
       showDefaultAlertDialog("Erro", response["message"], context);
     } else {
-      Navigator.pushReplacementNamed(context, "/home",
-          arguments: HomeScreenArguments(response["user"]["image"]));
+      await saveUserId(response["user"]["id"]);
+      Navigator.pushReplacementNamed(context, "/home");
     }
   }
 

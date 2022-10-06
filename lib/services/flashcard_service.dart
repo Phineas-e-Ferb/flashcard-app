@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class FlashCardService {
   late Dio dio;
-  final String domain = "http://192.168.1.14:3000/";
+  final String domain = "http://192.168.1.21:3000/";
 
   FlashCardService() {
     dio = Dio();
@@ -17,9 +17,23 @@ class FlashCardService {
     return url;
   }
 
-  void getRequest(String endpoint, {String? args}) async {
-    await dio.get(createUrl(endpoint, args),
-        options: Options(responseType: ResponseType.json));
+  Future<dynamic> getRequest(String endpoint, {String? args}) async {
+    try {
+      var response = await dio.get(createUrl(endpoint, args),
+          options: Options(responseType: ResponseType.json));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return response.data;
+      }
+      return {
+        "error": "Status code not allowed",
+        "message": "Something went wrong"
+      };
+    } on Exception catch (error) {
+      return {
+        "error": "Status code not allowed",
+        "message": "Something went wrong"
+      };
+    }
     //Todo try catch
   }
 

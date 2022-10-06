@@ -1,12 +1,8 @@
 import 'dart:convert';
 
+import 'package:flashcard/services/flashcard_service.dart';
 import 'package:flutter/material.dart';
-
-class HomeScreenArguments {
-  final String photo;
-
-  HomeScreenArguments(this.photo);
-}
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,15 +12,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int? userId;
+  String? photo;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+  void getUserData() async {
+    var pref = await SharedPreferences.getInstance();
+    userId = pref.getInt("user_id");
+    var userInfo =
+        await FlashCardService().getRequest("users/", args: userId.toString());
+    print(userInfo);
+    setState(() {
+      photo = userInfo["image"];
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as HomeScreenArguments;
     return Scaffold(
       appBar: AppBar(),
-      body: Image.memory(
-        base64Decode(args.photo),
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Image.memory(
+              base64Decode(photo!),
+            ),
     );
   }
 }
