@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : Image.memory(
               base64Decode(photo!),
             ),
