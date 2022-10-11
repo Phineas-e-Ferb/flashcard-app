@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class FlashCardService {
+class Api {
   late Dio dio;
   final String domain = dotenv.env["IP_ADDRESS"]!;
 
-  FlashCardService() {
+  Api() {
     dio = Dio();
   }
 

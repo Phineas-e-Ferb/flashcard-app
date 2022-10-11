@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/models/user.dart';
+import 'package:flashcard/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,9 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int? userId;
-  String? photo;
   bool isLoading = true;
+  User? user;
 
   @override
   void initState() {
@@ -24,13 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getUserData() async {
     var pref = await SharedPreferences.getInstance();
-    userId = pref.getInt("user_id");
-    var userInfo =
-        await FlashCardService().getRequest("users/", args: userId.toString());
+    int? userId = pref.getInt("user_id");
+    User userInfo = await UserService().getUserById(userId.toString());
     setState(() {
-      photo = userInfo["image"];
+      user = userInfo;
       isLoading = false;
     });
+  }
+
+  void handleSignOut() async {
+    var pref = await SharedPreferences.getInstance();
+    await pref.remove("user_id");
+    Navigator.pushReplacementNamed(context, "/");
   }
 
   @override
@@ -44,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
               elevation: 0,
               actions: [
                 IconButton(
-                    onPressed: () => {},
+                    onPressed: handleSignOut,
                     icon: const Icon(
                       Icons.logout,
                       size: 24,
@@ -59,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(16),
                       image: DecorationImage(
                           image: MemoryImage(
-                            base64Decode(photo!),
+                            base64Decode(user!.image),
                           ),
                           fit: BoxFit.cover),
                     ),
@@ -69,12 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("Olá,", style: TextStyle(fontSize: 18)),
+                    children: [
+                      const Text("Olá,", style: TextStyle(fontSize: 18)),
                       Text(
-                        "FONE",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
+                        user!.username,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),

@@ -1,8 +1,7 @@
 import 'dart:io';
 
-import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/services/user_service.dart';
 import 'package:flashcard/utils/default_alert_dialog.dart';
-import 'package:flashcard/utils/image_to_base64.dart';
 import 'package:flashcard/utils/save_user_id.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
@@ -45,12 +44,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleUserRegister() async {
-    String image64 = await imageToBase64(_image!);
-    var response = await FlashCardService().postRequest("users", body: {
-      "username": usernameController.text,
-      "password": passwordController.text,
-      "image": image64
-    });
+    var response = await UserService()
+        .signup(usernameController.text, passwordController.text, _image!);
     handleRegisterResponse(response);
   }
 

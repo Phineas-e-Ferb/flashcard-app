@@ -1,4 +1,4 @@
-import 'package:flashcard/services/flashcard_service.dart';
+import 'package:flashcard/services/user_service.dart';
 import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/utils/save_user_id.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
@@ -29,10 +29,8 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       isLoading = true;
     });
-    var response = await FlashCardService().postRequest('login', body: {
-      "username": usernameController.text,
-      "password": passwordController.text
-    });
+    var response = await UserService()
+        .signin(usernameController.text, passwordController.text);
     setState(() {
       isLoading = false;
     });
