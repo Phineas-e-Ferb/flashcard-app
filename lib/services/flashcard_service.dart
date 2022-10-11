@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FlashCardService {
   late Dio dio;
-  final String domain = "http://192.168.1.21:3000/";
+  final String domain = dotenv.env["IP_ADDRESS"]!;
 
   FlashCardService() {
     dio = Dio();

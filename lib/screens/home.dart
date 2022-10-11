@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     userId = pref.getInt("user_id");
     var userInfo =
         await FlashCardService().getRequest("users/", args: userId.toString());
-    print(userInfo);
     setState(() {
       photo = userInfo["image"];
       isLoading = false;
@@ -36,13 +35,52 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Image.memory(
-              base64Decode(photo!),
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Theme.of(context).colorScheme.background,
+              elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () => {},
+                    icon: const Icon(
+                      Icons.logout,
+                      size: 24,
+                    ))
+              ],
+              title: Row(
+                children: [
+                  Container(
+                    width: 54,
+                    height: 54,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      image: DecorationImage(
+                          image: MemoryImage(
+                            base64Decode(photo!),
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text("Olá,", style: TextStyle(fontSize: 18)),
+                      Text(
+                        "FONE",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-    );
+          );
   }
 }
