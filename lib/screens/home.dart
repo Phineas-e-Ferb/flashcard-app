@@ -34,8 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void handleSignOut() async {
     var pref = await SharedPreferences.getInstance();
-    await pref.remove("user_id");
-    Navigator.pushReplacementNamed(context, "/");
+
+    pref
+        .remove("user_id")
+        .then((_) => Navigator.pushReplacementNamed(context, "/"));
   }
 
   @override

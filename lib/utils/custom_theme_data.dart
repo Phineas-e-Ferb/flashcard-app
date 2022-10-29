@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 ThemeData getCustomThemeData() {
   return ThemeData(
-    scaffoldBackgroundColor: Color(0xFF121212),
-    cardColor: Color(0xFF1E1E1E),
+    scaffoldBackgroundColor: const Color(0xFF121212),
+    cardColor: const Color(0xFF1E1E1E),
     fontFamily: 'Inter',
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,

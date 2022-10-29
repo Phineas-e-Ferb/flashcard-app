@@ -29,7 +29,7 @@ class Api {
         "error": "Status code not allowed",
         "message": "Something went wrong"
       };
-    } on Exception catch (error) {
+    } on Exception catch (_) {
       return {
         "error": "Status code not allowed",
         "message": "Something went wrong"
@@ -49,7 +49,7 @@ class Api {
         "error": "Status code not allowed",
         "message": "Something went wrong"
       };
-    } on Exception catch (error) {
+    } on Exception catch (_) {
       return {
         "error": "Status code not allowed",
         "message": "Something went wrong"

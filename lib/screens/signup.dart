@@ -53,8 +53,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (response["error"] != null) {
       showDefaultAlertDialog("Erro", response["message"], context);
     } else {
-      await saveUserId(response["user"]["id"]);
-      Navigator.pushReplacementNamed(context, "/home");
+      saveUserId(response["user"]["id"])
+          .then((_) => Navigator.pushReplacementNamed(context, "/home"));
     }
   }
 
