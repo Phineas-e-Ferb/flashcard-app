@@ -1,11 +1,26 @@
-import 'package:flashcard/utils/custom_theme_data.dart';
-import 'package:flashcard/utils/get_routes.dart';
+import 'package:flashcard/services/api.dart';
+import 'package:flashcard/services/user_service.dart';
+import 'package:flashcard/utils/material_env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+  final apiService = Api();
+  final userService = UserService();
+
+  dotenv.load(fileName: ".env").then(
+        (_) => {
+          runApp(
+            MultiProvider(
+              providers: [
+                ChangeNotifierProvider.value(value: apiService),
+                ChangeNotifierProvider.value(value: userService),
+              ],
+            ),
+          )
+        },
+      );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,10 +30,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flashcard App',
-      theme: getCustomThemeData(),
+      theme: MaterialSetEnv.setThemeData(),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
-      routes: getRoutes(),
+      routes: MaterialSetEnv.setRoutes(),
     );
   }
 }
