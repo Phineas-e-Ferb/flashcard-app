@@ -23,7 +23,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     setState(() {
       isLoading = false;
     });
-    if (userId != null) {
+    if (userId != null && mounted) {
       Navigator.pushReplacementNamed(context, "/home");
     }
   }
@@ -51,17 +51,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         'Estude\nOrganize-se\nAprimore-se',
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 272,
-                        child: const Text(
+                        child: Text(
                           'Estude com flash cards personalizáveis ao ponto de se transformar em um mago',
                           style: TextStyle(
                             fontSize: 16,
