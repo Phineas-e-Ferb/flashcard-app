@@ -6,17 +6,20 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  final apiService = Api();
-  final userService = UserService();
+  late UserService userService;
+  late Api apiService;
 
   dotenv.load(fileName: ".env").then(
         (_) => {
+          userService = UserService(),
+          apiService = Api(),
           runApp(
             MultiProvider(
               providers: [
                 ChangeNotifierProvider.value(value: apiService),
                 ChangeNotifierProvider.value(value: userService),
               ],
+              child: const MyApp(),
             ),
           )
         },

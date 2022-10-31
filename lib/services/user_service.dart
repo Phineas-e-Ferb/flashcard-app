@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flashcard/models/user.dart';
 import 'package:flashcard/services/api.dart';
+import 'package:flashcard/utils/catch_exception.dart';
 import 'package:flashcard/utils/image_to_base64.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,7 +33,7 @@ class UserService extends Api {
       );
       return response;
     } catch (error) {
-      throw Exception(error);
+      throw ResponseException(error as Map).message;
     }
   }
 
@@ -47,7 +48,7 @@ class UserService extends Api {
       );
       return response;
     } catch (error) {
-      throw Exception(error);
+      throw ResponseException(error as Map).message;
     }
   }
 
@@ -57,7 +58,7 @@ class UserService extends Api {
       User user = User.fromJson(response);
       return user;
     } catch (error) {
-      throw Exception(error);
+      throw ResponseException(error as Map).message;
     }
   }
 }
