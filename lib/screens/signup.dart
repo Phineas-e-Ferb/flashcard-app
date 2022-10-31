@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flashcard/services/user_service.dart';
+import 'package:flashcard/utils/catch_exception.dart';
 import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/utils/save_user_id.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
@@ -8,6 +9,7 @@ import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flashcard/widgets/image_picker_preview.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,12 +19,20 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  late UserService userService;
   bool showPassword = false;
+  bool isLoading = false;
   File? _image;
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    userService = context.read<UserService>();
+    super.initState();
+  }
 
   void changePasswordVisibility() {
     setState(() {
@@ -43,19 +53,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  void handleUserRegister() async {
-    var response = await UserService()
-        .signup(usernameController.text, passwordController.text, _image!);
-    handleRegisterResponse(response);
+  void handleUserRegister() {
+    isLoading = true;
+    setState(() {});
+    userService
+        .signup(usernameController.text, passwordController.text, _image!)
+        .then((response) => {
+              isLoading = false,
+              setState(() {}),
+              handleRegisterResponse(response),
+            })
+        .catchError((error) => {
+              isLoading = false,
+              setState(() {}),
+              ResponseException.showError(context, error),
+            });
   }
 
-  void handleRegisterResponse(dynamic response) async {
-    if (response["error"] != null) {
-      showDefaultAlertDialog("Erro", response["message"], context);
-    } else {
-      saveUserId(response["user"]["id"])
-          .then((_) => Navigator.pushReplacementNamed(context, "/home"));
-    }
+  void handleRegisterResponse(dynamic response) {
+    saveUserId(response["user"]["id"])
+        .then((_) => Navigator.pushReplacementNamed(context, "/home"));
   }
 
   bool shouldDisableButton() {
@@ -139,6 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   DefaultButtonWidget(
                     label: "Cadastrar",
                     onPressed: handleUserRegister,
+                    showLoading: isLoading,
                     disableButton: shouldDisableButton(),
                   ),
                   Row(

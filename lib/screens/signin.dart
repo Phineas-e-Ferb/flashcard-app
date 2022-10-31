@@ -1,9 +1,11 @@
 import 'package:flashcard/services/user_service.dart';
+import 'package:flashcard/utils/catch_exception.dart';
 import 'package:flashcard/utils/default_alert_dialog.dart';
 import 'package:flashcard/utils/save_user_id.dart';
 import 'package:flashcard/widgets/default_button.widget.dart';
 import 'package:flashcard/widgets/default_input.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -13,28 +15,41 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  late UserService userService;
   bool showPassword = false;
   bool isLoading = false;
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  @override
+  void initState() {
+    userService = context.read<UserService>();
+    super.initState();
+  }
+
   void changePasswordVisibility() {
-    setState(() {
-      showPassword = !showPassword;
-    });
+    showPassword = !showPassword;
+    setState(() {});
   }
 
   void handleUserLogin() async {
-    setState(() {
-      isLoading = true;
-    });
-    var response = await UserService()
-        .signin(usernameController.text, passwordController.text);
-    setState(() {
-      isLoading = false;
-    });
-    handleSigninResponse(response);
+    isLoading = true;
+    setState(() {});
+    userService
+        .signin(usernameController.text, passwordController.text)
+        .then((response) => {
+              handleSigninResponse(response),
+              isLoading = false,
+              setState(() {}),
+            })
+        .catchError(
+          (error) => {
+            isLoading = false,
+            setState(() {}),
+            ResponseException.showError(context, error),
+          },
+        );
   }
 
   bool shouldDisableButton() {

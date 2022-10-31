@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const errorMapResponse = {
+const Map errorMapResponse = {
   "error": "Status code not allowed",
   "message": "Something went wrong"
 };
@@ -29,7 +29,7 @@ class Api extends ChangeNotifier {
     try {
       var response = await dio.get(createUrl(endpoint, args),
           options: Options(responseType: ResponseType.json));
-      if (response.statusMessage == "OK") {
+      if (response.statusMessage == "Ok") {
         return response.data;
       } else {
         throw errorMapResponse;
@@ -43,7 +43,7 @@ class Api extends ChangeNotifier {
       {String? args, dynamic body}) async {
     try {
       var response = await dio.post(createUrl(endpoint, args), data: body);
-      if (response.statusMessage == "OK") {
+      if (response.statusMessage == "Ok") {
         return response.data;
       } else {
         throw errorMapResponse;
