@@ -54,18 +54,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleUserRegister() {
-    isLoading = true;
-    setState(() {});
+    setState(() {
+      isLoading = true;
+    });
     userService
         .signup(usernameController.text, passwordController.text, _image!)
         .then((response) => {
-              isLoading = false,
-              setState(() {}),
+              setState(() {
+                isLoading = false;
+              }),
               handleRegisterResponse(response),
             })
         .catchError((error) => {
-              isLoading = false,
-              setState(() {}),
+              setState(() {
+                isLoading = false;
+              }),
               ResponseException.showError(context, error),
             });
   }

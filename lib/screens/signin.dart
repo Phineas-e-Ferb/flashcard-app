@@ -29,24 +29,28 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void changePasswordVisibility() {
-    showPassword = !showPassword;
-    setState(() {});
+    setState(() {
+      showPassword = !showPassword;
+    });
   }
 
-  void handleUserLogin() async {
-    isLoading = true;
-    setState(() {});
+  void handleUserLogin() {
+    setState(() {
+      isLoading = true;
+    });
     userService
         .signin(usernameController.text, passwordController.text)
         .then((response) => {
               handleSigninResponse(response),
-              isLoading = false,
-              setState(() {}),
+              setState(() {
+                isLoading = false;
+              }),
             })
         .catchError(
           (error) => {
-            isLoading = false,
-            setState(() {}),
+            setState(() {
+              isLoading = false;
+            }),
             ResponseException.showError(context, error),
           },
         );
